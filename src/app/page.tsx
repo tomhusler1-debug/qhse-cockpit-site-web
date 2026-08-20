@@ -7,6 +7,7 @@ import { FAQAccordion } from "@/components/marketing/FAQAccordion";
 import { DashboardMock } from "@/components/marketing/DashboardMock";
 import { ShowcasePhoto } from "@/components/marketing/ShowcasePhoto";
 import { Reveal } from "@/components/motion/Reveal";
+import { TiltCard } from "@/components/motion/TiltCard";
 
 const features = [
   {
@@ -120,34 +121,46 @@ const steps = [
 
 const gallery = [
   {
-    src: "/images/tablet-technician.jpg",
-    alt: "Technicien consultant QHSE Cockpit sur tablette dans un atelier industriel",
-    caption: "Sur le terrain, en atelier",
-  },
-  {
     src: "/images/multi-device.jpg",
     alt: "QHSE Cockpit affiché sur ordinateur portable, tablette et smartphone",
+    eyebrow: "Partout, en continu",
     caption: "Un cockpit sur tous vos écrans",
+    span: "aspect-[4/3] lg:aspect-auto lg:col-span-4 lg:row-span-2",
+  },
+  {
+    src: "/images/tablet-technician.jpg",
+    alt: "Technicien consultant QHSE Cockpit sur tablette dans un atelier industriel",
+    eyebrow: "Atelier",
+    caption: "Sur le terrain, en un geste",
+    span: "aspect-[4/3] lg:aspect-auto lg:col-span-2 lg:row-span-1",
   },
   {
     src: "/images/wall-dashboard.jpg",
     alt: "Présentation du tableau de bord QHSE Cockpit en salle de réunion",
-    caption: "En comité de direction",
+    eyebrow: "Comité de direction",
+    caption: "Des chiffres partagés, sans détour",
+    span: "aspect-[4/3] lg:aspect-auto lg:col-span-2 lg:row-span-1",
   },
   {
     src: "/images/rugged-device.jpg",
     alt: "QHSE Cockpit sur terminal durci porté par un opérateur en usine",
-    caption: "Déclaration terrain, en temps réel",
+    eyebrow: "Terrain durci",
+    caption: "Déclaration en temps réel",
+    span: "aspect-[4/3] lg:aspect-auto lg:col-span-2 lg:row-span-1",
   },
   {
     src: "/images/office-monitor.jpg",
     alt: "Équipe QHSE suivant les indicateurs sur écran de bureau",
-    caption: "Pilotage au quotidien, au bureau",
+    eyebrow: "Bureau",
+    caption: "Pilotage au quotidien",
+    span: "aspect-[4/3] lg:aspect-auto lg:col-span-2 lg:row-span-1",
   },
   {
     src: "/images/van-field-inspection.jpg",
     alt: "Inspection de site renseignée sur tablette QHSE Cockpit depuis un véhicule",
-    caption: "Inspections mobiles, sans papier",
+    eyebrow: "Mobilité",
+    caption: "Inspections sans papier",
+    span: "aspect-[4/3] lg:aspect-auto lg:col-span-2 lg:row-span-1",
   },
 ];
 
@@ -303,15 +316,24 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-6 lg:[grid-auto-rows:14rem]">
             {gallery.map((item, index) => (
-              <Reveal key={item.src} variant="scale" delay={index * 80}>
-                <ShowcasePhoto
-                  src={item.src}
-                  alt={item.alt}
-                  caption={item.caption}
-                  priority={index === 0}
-                />
+              <Reveal
+                key={item.src}
+                variant="scale"
+                delay={index * 80}
+                className={`h-full ${item.span}`}
+              >
+                <TiltCard className="h-full">
+                  <ShowcasePhoto
+                    src={item.src}
+                    alt={item.alt}
+                    eyebrow={item.eyebrow}
+                    caption={item.caption}
+                    priority={index === 0}
+                    sizes="(min-width: 1024px) 45vw, (min-width: 640px) 50vw, 100vw"
+                  />
+                </TiltCard>
               </Reveal>
             ))}
           </div>
