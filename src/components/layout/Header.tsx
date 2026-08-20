@@ -49,13 +49,19 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`text-sm font-medium transition-colors ${
+                className={`group relative py-1 text-sm font-medium transition-colors ${
                   active
                     ? "text-indigo-600"
                     : "text-text-secondary hover:text-text"
                 }`}
               >
                 {item.label}
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-indigo-600 transition-transform duration-200 ease-out group-hover:scale-x-100 ${
+                    active ? "scale-x-100" : ""
+                  }`}
+                />
               </Link>
             );
           })}

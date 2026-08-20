@@ -1,9 +1,12 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { CTABanner } from "@/components/marketing/CTABanner";
 import { FAQAccordion } from "@/components/marketing/FAQAccordion";
 import { DashboardMock } from "@/components/marketing/DashboardMock";
+import { ShowcasePhoto } from "@/components/marketing/ShowcasePhoto";
+import { Reveal } from "@/components/motion/Reveal";
 
 const features = [
   {
@@ -115,6 +118,39 @@ const steps = [
   },
 ];
 
+const gallery = [
+  {
+    src: "/images/tablet-technician.jpg",
+    alt: "Technicien consultant QHSE Cockpit sur tablette dans un atelier industriel",
+    caption: "Sur le terrain, en atelier",
+  },
+  {
+    src: "/images/multi-device.jpg",
+    alt: "QHSE Cockpit affiché sur ordinateur portable, tablette et smartphone",
+    caption: "Un cockpit sur tous vos écrans",
+  },
+  {
+    src: "/images/wall-dashboard.jpg",
+    alt: "Présentation du tableau de bord QHSE Cockpit en salle de réunion",
+    caption: "En comité de direction",
+  },
+  {
+    src: "/images/rugged-device.jpg",
+    alt: "QHSE Cockpit sur terminal durci porté par un opérateur en usine",
+    caption: "Déclaration terrain, en temps réel",
+  },
+  {
+    src: "/images/office-monitor.jpg",
+    alt: "Équipe QHSE suivant les indicateurs sur écran de bureau",
+    caption: "Pilotage au quotidien, au bureau",
+  },
+  {
+    src: "/images/van-field-inspection.jpg",
+    alt: "Inspection de site renseignée sur tablette QHSE Cockpit depuis un véhicule",
+    caption: "Inspections mobiles, sans papier",
+  },
+];
+
 const faqItems = [
   {
     question: "QHSE Cockpit s'adapte-t-il à nos référentiels (ISO 9001, ISO 45001, ISO 14001) ?",
@@ -173,7 +209,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="animate-fade-up [animation-delay:150ms]">
+          <div className="relative animate-fade-up [animation-delay:150ms]">
+            <div
+              aria-hidden="true"
+              className="animate-float absolute -right-6 -top-10 hidden w-28 overflow-hidden rounded-2xl border-2 border-white/20 shadow-2xl shadow-indigo-950/50 sm:block lg:-right-14 lg:w-36"
+            >
+              <div className="relative aspect-[3/4] w-full">
+                <Image
+                  src="/images/mobile-hero.jpg"
+                  alt=""
+                  fill
+                  sizes="150px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
             <DashboardMock />
           </div>
         </Container>
@@ -181,7 +231,7 @@ export default function Home() {
 
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
               Le problème
             </p>
@@ -195,45 +245,44 @@ export default function Home() {
               QHSE Cockpit réunit toutes vos données dans un seul outil,
               lisible par tous.
             </p>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       <section className="bg-bg-muted py-20 sm:py-28">
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
               Fonctionnalités
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
               Tout votre système QHSE, dans un seul cockpit
             </h2>
-          </div>
+          </Reveal>
 
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="rounded-2xl border border-border bg-white p-6"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    {feature.icon}
-                  </svg>
+            {features.map((feature, index) => (
+              <Reveal key={feature.title} delay={index * 60}>
+                <div className="group h-full rounded-2xl border border-border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-100">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 transition-colors duration-300 group-hover:bg-indigo-600 group-hover:text-white">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      {feature.icon}
+                    </svg>
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold text-text">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="mt-4 text-base font-semibold text-text">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-text-secondary">
-                  {feature.description}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -241,28 +290,29 @@ export default function Home() {
 
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
-              Mise en place
+              En situation
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
-              Opérationnel en trois étapes
+              Le pilotage QHSE, partout où vous travaillez
             </h2>
-          </div>
+            <p className="mt-4 text-base leading-7 text-text-secondary">
+              Du terrain à la salle de réunion, QHSE Cockpit s&apos;adapte à
+              chaque contexte de travail de vos équipes.
+            </p>
+          </Reveal>
 
-          <div className="mt-14 grid gap-10 sm:grid-cols-3">
-            {steps.map((step) => (
-              <div key={step.number}>
-                <span className="text-sm font-bold text-indigo-600">
-                  {step.number}
-                </span>
-                <h3 className="mt-3 text-lg font-semibold text-text">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-text-secondary">
-                  {step.description}
-                </p>
-              </div>
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {gallery.map((item, index) => (
+              <Reveal key={item.src} variant="scale" delay={index * 80}>
+                <ShowcasePhoto
+                  src={item.src}
+                  alt={item.alt}
+                  caption={item.caption}
+                  priority={index === 0}
+                />
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -270,17 +320,48 @@ export default function Home() {
 
       <section className="bg-bg-muted py-20 sm:py-28">
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+              Mise en place
+            </p>
+            <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
+              Opérationnel en trois étapes
+            </h2>
+          </Reveal>
+
+          <div className="mt-14 grid gap-10 sm:grid-cols-3">
+            {steps.map((step, index) => (
+              <Reveal key={step.number} delay={index * 100}>
+                <div className="relative pl-0">
+                  <span className="text-sm font-bold text-indigo-600">
+                    {step.number}
+                  </span>
+                  <h3 className="mt-3 text-lg font-semibold text-text">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    {step.description}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-28">
+        <Container>
+          <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
               Questions fréquentes
             </p>
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
               Tout ce qu&apos;il faut savoir
             </h2>
-          </div>
-          <div className="mx-auto mt-12 max-w-2xl">
+          </Reveal>
+          <Reveal className="mx-auto mt-12 max-w-2xl">
             <FAQAccordion items={faqItems} />
-          </div>
+          </Reveal>
         </Container>
       </section>
 

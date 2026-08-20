@@ -1,9 +1,10 @@
 import { Badge } from "@/components/ui/Badge";
+import { Counter } from "@/components/motion/Counter";
 
 const stats = [
-  { label: "Actions en cours", value: "24", tone: "brand" as const },
-  { label: "Non-conformités", value: "3", tone: "danger" as const },
-  { label: "Taux de clôture", value: "92%", tone: "success" as const },
+  { label: "Actions en cours", value: 24, suffix: "", tone: "brand" as const },
+  { label: "Non-conformités", value: 3, suffix: "", tone: "danger" as const },
+  { label: "Taux de clôture", value: 92, suffix: "%", tone: "success" as const },
 ];
 
 const rows = [
@@ -38,9 +39,11 @@ export function DashboardMock() {
           {stats.map((s) => (
             <div
               key={s.label}
-              className="rounded-lg border border-border p-3"
+              className="rounded-lg border border-border p-3 transition-colors hover:border-indigo-200 hover:bg-indigo-50/40"
             >
-              <p className="text-2xl font-bold text-text">{s.value}</p>
+              <p className="text-2xl font-bold text-text">
+                <Counter to={s.value} suffix={s.suffix} />
+              </p>
               <p className="mt-1 text-[11px] leading-tight text-text-secondary">
                 {s.label}
               </p>
@@ -52,9 +55,17 @@ export function DashboardMock() {
           {rows.map((row) => (
             <div
               key={row.name}
-              className="flex items-center justify-between rounded-lg border border-border px-3 py-2.5"
+              className="flex items-center justify-between rounded-lg border border-border px-3 py-2.5 transition-colors hover:border-indigo-200 hover:bg-indigo-50/40"
             >
-              <span className="truncate text-sm text-text">{row.name}</span>
+              <span className="flex items-center gap-2 truncate text-sm text-text">
+                {row.status === "Critique" && (
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-danger opacity-75 motion-reduce:hidden" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-danger" />
+                  </span>
+                )}
+                {row.name}
+              </span>
               <Badge variant={statusVariant[row.status]}>{row.status}</Badge>
             </div>
           ))}

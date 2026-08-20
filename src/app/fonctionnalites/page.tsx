@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
 import { CTABanner } from "@/components/marketing/CTABanner";
+import { Reveal } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
   title: "Fonctionnalités",
@@ -21,6 +23,9 @@ const modules = [
       "Classification par gravité, origine et processus concerné",
       "Historique complet et horodaté de chaque événement",
     ],
+    image: "/images/rugged-device.jpg",
+    imageAlt:
+      "Déclaration d'une non-conformité sur terminal durci porté par un opérateur en usine",
   },
   {
     badge: "En cours",
@@ -33,6 +38,9 @@ const modules = [
       "Relances automatiques avant échéance",
       "Vue consolidée de l'avancement par service ou par site",
     ],
+    image: "/images/van-field-inspection.jpg",
+    imageAlt:
+      "Plan d'actions et inspection de site renseignés sur tablette QHSE Cockpit",
   },
   {
     badge: "Maîtrisé",
@@ -45,6 +53,8 @@ const modules = [
       "Planification et affectation des auditeurs",
       "Génération de rapports d'audit exportables",
     ],
+    image: "/images/tablet-technician.jpg",
+    imageAlt: "Auditeur consultant une grille d'audit QHSE Cockpit sur tablette",
   },
   {
     badge: "À surveiller",
@@ -57,6 +67,8 @@ const modules = [
       "Export des données pour vos comités de direction",
       "Seuils d'alerte personnalisés",
     ],
+    image: "/images/office-monitor.jpg",
+    imageAlt: "Équipe QHSE suivant les indicateurs du tableau de bord sur écran de bureau",
   },
 ];
 
@@ -106,7 +118,7 @@ export default function FonctionnalitesPage() {
 
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="space-y-20">
+          <div className="space-y-20 sm:space-y-28">
             {modules.map((mod, index) => (
               <div
                 key={mod.title}
@@ -114,7 +126,7 @@ export default function FonctionnalitesPage() {
                   index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
                 }`}
               >
-                <div>
+                <Reveal variant={index % 2 === 1 ? "right" : "left"}>
                   <Badge variant={mod.tone}>{mod.badge}</Badge>
                   <h2 className="mt-4 text-2xl font-bold tracking-tight text-text sm:text-3xl">
                     {mod.title}
@@ -145,26 +157,23 @@ export default function FonctionnalitesPage() {
                       </li>
                     ))}
                   </ul>
-                </div>
-                <div className="rounded-2xl border border-border bg-bg-muted p-8">
-                  <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-text">
-                        {mod.title}
-                      </span>
+                </Reveal>
+                <Reveal variant="scale" delay={100}>
+                  <div className="group relative overflow-hidden rounded-2xl border border-border shadow-sm">
+                    <div className="relative aspect-[4/3] w-full">
+                      <Image
+                        src={mod.image}
+                        alt={mod.imageAlt}
+                        fill
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="absolute left-4 top-4">
                       <Badge variant={mod.tone}>{mod.badge}</Badge>
                     </div>
-                    <div className="mt-4 space-y-2">
-                      {[1, 2, 3].map((row) => (
-                        <div
-                          key={row}
-                          className="h-3 rounded-full bg-bg-muted"
-                          style={{ width: `${100 - row * 12}%` }}
-                        />
-                      ))}
-                    </div>
                   </div>
-                </div>
+                </Reveal>
               </div>
             ))}
           </div>
@@ -173,24 +182,23 @@ export default function FonctionnalitesPage() {
 
       <section className="bg-bg-muted py-20 sm:py-28">
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">
               Et bien plus encore
             </h2>
-          </div>
+          </Reveal>
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {extras.map((extra) => (
-              <div
-                key={extra.title}
-                className="rounded-2xl border border-border bg-white p-6"
-              >
-                <h3 className="text-base font-semibold text-text">
-                  {extra.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-text-secondary">
-                  {extra.description}
-                </p>
-              </div>
+            {extras.map((extra, index) => (
+              <Reveal key={extra.title} delay={index * 60}>
+                <div className="h-full rounded-2xl border border-border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-100">
+                  <h3 className="text-base font-semibold text-text">
+                    {extra.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">
+                    {extra.description}
+                  </p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </Container>
